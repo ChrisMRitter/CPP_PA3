@@ -12,12 +12,12 @@ Player::Player(std::string texturePath, float speed) {
 
   // Set the texture to the sprite
   sprite.setTexture(texture);
-  sprite.setTextureRect(sf::IntRect(0, 0, 64, 64)); // Adjust if needed
+  sprite.setTextureRect(sf::IntRect(0, 50, 256, 256)); // Adjust if needed
 
   // Position and scale
   sprite.setPosition(400, 500); // Bottom center of screen
   sprite.setOrigin(32, 32);     // Center the origin
-  sprite.setScale(2, 2);        // Scale up the sprite
+  sprite.setScale(.5, .5);      // Scale up the sprite
 
   this->speed = speed;
 }
