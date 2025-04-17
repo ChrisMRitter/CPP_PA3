@@ -1,4 +1,3 @@
-// Player.h
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -21,4 +20,4 @@ private:
   void handleInput(float dt);
 };
 
-#endif // PLAYER_H
+#endif

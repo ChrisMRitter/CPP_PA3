@@ -1,6 +1,6 @@
 // This will be the main game loop, and will handle all the repeating logic
 
-#include "player.h" // Correct way to include your Player class
+#include "player.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <iostream>
@@ -18,7 +18,7 @@ int main() {
   sf::RenderWindow window(sf::VideoMode(VIEW_WIDTH, VIEW_HEIGHT),
                           "SFML window");
 
-  // Create the player — spaceship that moves left and right only
+  // Create the player
   Player player("./Assets/Sprites/hero spaceship.png", 300.f);
 
   // Load the font

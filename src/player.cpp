@@ -1,5 +1,3 @@
-// This class handles horizontal movement of a spaceship sprite
-
 #include "player.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
