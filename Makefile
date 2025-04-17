@@ -1,8 +1,8 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -I./src
-LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+CXXFLAGS = -std=c++17 -I/opt/homebrew/include -I./src
+LDFLAGS = -L/opt/homebrew/lib -lsfml-graphics -lsfml-window -lsfml-system
 
-SRC = src/main.cpp src/Player.cpp
+SRC = src/main.cpp src/player.cpp
 OBJ = $(SRC:.cpp=.o)
 TARGET = game
 
@@ -11,7 +11,7 @@ all: $(TARGET)
 $(TARGET): $(OBJ)
 	$(CXX) $(OBJ) -o $(TARGET) $(LDFLAGS)
 
-%.o: %.cpp
+src/%.o: src/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
