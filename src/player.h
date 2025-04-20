@@ -1,23 +1,30 @@
+#pragma once
+// Player.h
 #ifndef PLAYER_H
 #define PLAYER_H
 
 #include <SFML/Graphics.hpp>
 #include <string>
 
+#include <iostream>
+
 class Player {
 public:
-  Player(std::string texturePath, float speed);
-  void draw(sf::RenderWindow &window);
-  void update(float dt);
-  sf::Vector2f getPosition();
-  sf::FloatRect getGlobalBounds();
+	Player(std::string texturePath, float speed);
+	void draw(sf::RenderWindow& window);
+	void update(float dt);
+	sf::Vector2f getPosition();
+	sf::FloatRect getGlobalBounds();
+	int getHealth() const;
 
 private:
-  sf::Texture texture;
-  sf::Sprite sprite;
-  float speed;
+	sf::Texture texture;
+	sf::Sprite sprite;
+	float speed;
+	// The health of the player
+	int health = 10;
 
-  void handleInput(float dt);
+	void handleInput(float dt);
 };
 
-#endif
+#endif // PLAYER_H
