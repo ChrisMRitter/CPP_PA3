@@ -4,6 +4,7 @@
 #include "textManager.h" // Include the textManager class
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 
 // Setting basic view size.
@@ -37,6 +38,15 @@ int main() {
     // Clock for delta time
     sf::Clock clock;
 
+    // Music Setup
+    sf::Music backgroundMusic;
+    if (!backgroundMusic.openFromFile("./Assets/Sound/ambient-soundscapes-004-space-atmosphere-303243.mp3")) {
+        std::cerr << "Failed to load background music!" << std::endl;
+    }
+    // Loop the music and play it
+    backgroundMusic.setLoop(true);
+    backgroundMusic.play();
+    
     // Run the start screen function
     startScreen(window, font);
 
