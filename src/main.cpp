@@ -1,10 +1,14 @@
 // This will be the main game loop, and will handle all the repeating logic
 
+/*
+Contributors: Alexander Aldama-Apodaca
+*/
+
 #include "player.h" // Correct way to include your Player class
 #include "textManager.h" // Include the textManager class
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Mouse.hpp>
-#include <SFML/Audio.hpp>
+#include <SFML/Audio.hpp> // Include the SFML Audio module - done by Alexander Aldama-Apodaca
 #include <iostream>
 
 // Setting basic view size.
@@ -38,7 +42,8 @@ int main() {
     // Clock for delta time
     sf::Clock clock;
 
-    // Music Setup
+    // Music Setup - done by Alexander Aldama-Apodaca
+    // Load music
     sf::Music backgroundMusic;
     if (!backgroundMusic.openFromFile("./Assets/Sound/ambient-soundscapes-004-space-atmosphere-303243.mp3")) {
         std::cerr << "Failed to load background music!" << std::endl;
