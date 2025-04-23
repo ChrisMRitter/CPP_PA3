@@ -1,5 +1,5 @@
 /*
-Header file to manage the game's text
+textManager.h - header file to manage the game's text
 
 Contributors: Alexander Aldama-Apodaca
 */
