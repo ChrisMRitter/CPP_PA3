@@ -5,10 +5,10 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <iostream>
+#include "laser.h"
+#include <SFML/Audio.hpp>
+#include "gameconstants.h"
 
-// Setting basic view size.
-const float VIEW_WIDTH = 800.f;
-const float VIEW_HEIGHT = 600.f;
 
 // Placeholder functions
 void handleEvents(sf::RenderWindow& window);
@@ -34,11 +34,14 @@ int main() {
     textManager textManager;
     textManager.loadFont("./Assets/Fonts/VeniteAdoremus-rgRBA.ttf");
 
+    std::vector<Laser> lasers;
+
     // Clock for delta time
     sf::Clock clock;
 
     // Run the start screen function
     startScreen(window, font);
+
 
     // Load background
     sf::Texture backgroundTexture;
@@ -57,9 +60,20 @@ int main() {
 
     background.setScale(scaleX, scaleY);
 
+    //TODO: Music and sound, level manager, etc.
+
+    // Configure music
+    sf::Music backgroundMusic;
+    if (!backgroundMusic.openFromFile("Eschatos.mp3"))
+    {
+        std::cerr << "Failed to load background music!" << std::endl;
+    }
+    backgroundMusic.setLoop(true);
+    backgroundMusic.play();
+
     // Primary game loop
     while (window.isOpen()) {
-        // Delta time
+        // Delta time: framerate independent physics
         float dt = clock.restart().asSeconds();
 
         // Check the player's health
@@ -68,25 +82,61 @@ int main() {
         // Handle events
         handleEvents(window);
 
-        // Update player
-        player.update(dt);
 
-        // Update player health
+        // Get mouse position for aiming
+        sf::Vector2f mouseWorldPos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+
+        // Update player
+        player.update(dt, lasers, mouseWorldPos);
+
+        // Update level (enemies, obstacles, etc.) - may add later
+        //levelManager.update(dt, player, lasers);
+
+
+        //update UI elements
         sf::Vector2f viewCenter = window.getView().getCenter();
         sf::Vector2f viewSize = window.getView().getSize();
+
         textManager.updatePlayerHealth(player.getHealth(), viewCenter, viewSize);
         textManager.updateScoreDisplay(viewCenter, viewSize);
+
+        // Update player health
+
+        textManager.updatePlayerHealth(player.getHealth(), viewCenter, viewSize);
+        textManager.updateScoreDisplay(viewCenter, viewSize);
+
+        // Update camera to follow player
+        sf::View view = window.getView();
+        view.setCenter(player.getPosition());
+        window.setView(view);
 
         // Clear screen
         window.clear();
 
         // Draw background, player, and text
+        sf::View fixedView = window.getDefaultView(); //need to untether the background from the gameplay area, to keep background constant
+        window.setView(fixedView);
         window.draw(background);
+        window.setView(view); //reset to player view for game elements
         player.draw(window);
         textManager.draw(window);
 
-        // Display everything
+        //Display and update lasers
+
+        for (auto laser = lasers.begin(); laser != lasers.end();) {
+            laser->update(dt);
+            laser->draw(window);
+            if (laser->isOutOfBounds())
+                laser = lasers.erase(laser);
+            else
+                ++laser;
+        }
+                
+
+        // Display everything else
         window.display();
+
+
     }
 
     return 0;
