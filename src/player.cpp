@@ -1,9 +1,13 @@
 // This class handles horizontal movement of a spaceship sprite
 
+/*
+Contributors: Alexander Aldama-Apodaca
+*/
+
 #include "player.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <string>
+#include <string> // include the string library - done by Alexander Aldama-Apodaca
 
 Player::Player(std::string texturePath, float speed) {
     // Load the texture from the file
@@ -45,7 +49,7 @@ void Player::handleInput(float dt) {
     sprite.move(movement * dt);
 }
 
-// Get the player's health
+// Get the player's health - done by Alexander Aldama-Apodaca
 int Player::getHealth() const {
     return health;
 }
