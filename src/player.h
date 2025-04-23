@@ -1,3 +1,9 @@
+/*
+player.h - header file to manage game components relating to the player
+
+Contributors: Alexander Aldama-Apodaca
+*/
+
 #pragma once
 // Player.h
 #ifndef PLAYER_H
@@ -15,14 +21,13 @@ public:
 	void update(float dt);
 	sf::Vector2f getPosition();
 	sf::FloatRect getGlobalBounds();
-	int getHealth() const;
+	int getHealth() const; // return player's health - done by Alexander Aldama-Apodaca
 
 private:
 	sf::Texture texture;
 	sf::Sprite sprite;
 	float speed;
-	// The health of the player
-	int health = 10;
+	int health = 10; // The health of the player - done by Alexander Aldama-Apodaca
 
 	void handleInput(float dt);
 };
