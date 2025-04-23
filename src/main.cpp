@@ -18,7 +18,7 @@ const float VIEW_HEIGHT = 600.f;
 // Placeholder functions
 void handleEvents(sf::RenderWindow& window);
 void startScreen(sf::RenderWindow& window, sf::Font font);
-void checkPlayerHealth(Player& player, sf::RenderWindow& window, sf::Font font);
+void checkPlayerHealth(Player& player, sf::RenderWindow& window, sf::Font font); // function to check player health - done by Alexander Aldama-Apodaca
 
 int main() {
     // Create the main window
@@ -28,7 +28,7 @@ int main() {
     // Create the player — spaceship that moves left and right only
     Player player("./Assets/Sprites/hero spaceship.png", 300.f);
 
-    // Load the font
+    // Load the font - done by Alexander Aldama-Apodaca
     sf::Font font;
     if (!font.loadFromFile(
         "./Assets/Fonts/VeniteAdoremus-rgRBA.ttf")) // <- Adjusted path
@@ -77,7 +77,7 @@ int main() {
         // Delta time
         float dt = clock.restart().asSeconds();
 
-        // Check the player's health
+        // Check the player's health - done by Alexander Aldama-Apodaca
         checkPlayerHealth(player, window, font);
 
         // Handle events
@@ -86,7 +86,7 @@ int main() {
         // Update player
         player.update(dt);
 
-        // Update player health
+        // Update player health - done by Alexander Aldama-Apodaca
         sf::Vector2f viewCenter = window.getView().getCenter();
         sf::Vector2f viewSize = window.getView().getSize();
         textManager.updatePlayerHealth(player.getHealth(), viewCenter, viewSize);
@@ -95,7 +95,7 @@ int main() {
         // Clear screen
         window.clear();
 
-        // Draw background, player, and text
+        // Draw background, player, and text2
         window.draw(background);
         player.draw(window);
         textManager.draw(window);
@@ -131,7 +131,7 @@ void startScreen(sf::RenderWindow& window, sf::Font font) {
     }
 }
 
-// Function to check the player's health, and trigger the end game.
+// Function to check the player's health, and trigger the end game. - done by Alexander Aldama-Apodaca
 void checkPlayerHealth(Player& player, sf::RenderWindow& window, sf::Font font) {
     if (player.getHealth() <= 0) {
         sf::Text gameOverText("Game Over \n Press esc to quit", font, 50);
