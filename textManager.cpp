@@ -1,7 +1,13 @@
+/*
+textManager.cpp - adds functionality to the textManager class
+
+Contributors: Alexander Aldama-Apodaca
+*/
+
 #include "textManager.h"
 #include <iostream>
 
-// Constructor
+// Constructor - done by Alexander Aldama-Apodaca
 bool textManager::loadFont(const std::string& path) {
 	if (!font.loadFromFile(path)) {
 		std::cerr << "Failed to load font: " << path << std::endl;
@@ -14,23 +20,23 @@ bool textManager::loadFont(const std::string& path) {
 	return true;
 }
 
-// Function to update the player's health text
+// Function to update the player's health text - done by Alexander Aldama-Apodaca
 void textManager::updatePlayerHealth(int health, sf::Vector2f viewCenter, sf::Vector2f viewSize) {
 	playerHealthText.setString("Health: " + std::to_string(health));
 	playerHealthText.setPosition(viewCenter.x - playerHealthText.getGlobalBounds().width / 2.f, viewCenter.y - viewSize.y / 2.f + 10.f);
 }
 
-// Function to add score
+// Function to add score - done by Alexander Aldama-Apodaca
 void textManager::addScore(int amount) {
 	score += amount;
 }
 
-// Function to get the score
+// Function to get the score - done by Alexander Aldama-Apodaca
 int textManager::getScore() {
 	return score;
 }
 
-// Function to update the score display
+// Function to update the score display - done by Alexander Aldama-Apodaca
 void textManager::updateScoreDisplay(sf::Vector2f viewCenter, sf::Vector2f viewSize) {
 	scoreText.setFont(font);
 	scoreText.setCharacterSize(20);
@@ -40,7 +46,7 @@ void textManager::updateScoreDisplay(sf::Vector2f viewCenter, sf::Vector2f viewS
 	scoreText.setPosition(viewCenter.x - scoreText.getGlobalBounds().width / 2.f, viewCenter.y - viewSize.y / 2.f + 40.f); // below the health
 }
 
-// Function to draw the text
+// Function to draw the text - done by Alexander Aldama-Apodaca
 void textManager::draw(sf::RenderWindow& window) {
 	window.draw(playerHealthText);
 	window.draw(scoreText);
