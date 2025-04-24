@@ -64,7 +64,7 @@ int main() {
 
     // Configure music
     sf::Music backgroundMusic;
-    if (!backgroundMusic.openFromFile("Eschatos.mp3"))
+    if (!backgroundMusic.openFromFile("./Assets/Sound/Eschatos.mp3"))
     {
         std::cerr << "Failed to load background music!" << std::endl;
     }
@@ -75,6 +75,9 @@ int main() {
     while (window.isOpen()) {
         // Delta time: framerate independent physics
         float dt = clock.restart().asSeconds();
+
+        if (dt > 0.1f) dt = 0.1f; //optimization cap
+
 
         // Check the player's health
         checkPlayerHealth(player, window, font);
@@ -94,30 +97,21 @@ int main() {
 
 
         //update UI elements
-        sf::Vector2f viewCenter = window.getView().getCenter();
-        sf::Vector2f viewSize = window.getView().getSize();
+        sf::Vector2f viewCenter = {VIEW_WIDTH/2.f, VIEW_HEIGHT/2.f}; //center
+        sf::Vector2f viewSize = {VIEW_WIDTH, VIEW_HEIGHT};
 
-        textManager.updatePlayerHealth(player.getHealth(), viewCenter, viewSize);
-        textManager.updateScoreDisplay(viewCenter, viewSize);
 
         // Update player health
 
         textManager.updatePlayerHealth(player.getHealth(), viewCenter, viewSize);
         textManager.updateScoreDisplay(viewCenter, viewSize);
 
-        // Update camera to follow player
-        sf::View view = window.getView();
-        view.setCenter(player.getPosition());
-        window.setView(view);
 
         // Clear screen
         window.clear();
 
         // Draw background, player, and text
-        sf::View fixedView = window.getDefaultView(); //need to untether the background from the gameplay area, to keep background constant
-        window.setView(fixedView);
         window.draw(background);
-        window.setView(view); //reset to player view for game elements
         player.draw(window);
         textManager.draw(window);
 
@@ -135,6 +129,13 @@ int main() {
 
         // Display everything else
         window.display();
+
+        //frame rate limiter - WARNING DO NOT REMOVE WARNING
+        sf::Time frameTime = sf::seconds(1.0f / 60.0f); //60fps
+        sf::Time elapsed = clock.getElapsedTime();
+        if (elapsed < frameTime) {
+            sf::sleep(frameTime - elapsed);
+        }
 
 
     }

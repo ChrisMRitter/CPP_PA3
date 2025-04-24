@@ -11,20 +11,31 @@
 Player::Player(std::string texturePath, float speed) {
     // Load the texture from the file
     if (!texture.loadFromFile(texturePath)) {
-        std::cerr << "Error loading texture!" << std::endl;
+        std::cerr << "Error loading texture!" << texturePath << std::endl;
+        sprite.setTextureRect(sf::IntRect(0, 0, 64, 64));
+        sprite.setColor(sf::Color::Blue);
+
     }
 
-    // Set the texture to the sprite
-    sprite.setTexture(texture);
-    sprite.setTextureRect(sf::IntRect(0, 50, 256, 256)); // Adjust if needed
+    else {
+        std::cout << "Loaded texture with size: " << texture.getSize().x << "x"
+                    << texture.getSize().y << std::endl;
 
-    // Position and scale
-    sprite.setPosition(400, 500); // Bottom center of screen
-    sprite.setOrigin(32, 32);     // Center the origin
-    sprite.setScale(.5, .5);      // Scale up the sprite
+                    sprite.setTexture(texture);
 
-    hitbox = new Hitbox(sf::Vector2f(sprite.getGlobalBounds().width * 0.8f,
-                                        sprite.getGlobalBounds().height * 0.8f));
+    }
+
+    // Position at bottom center of screen
+    sprite.setPosition(VIEW_WIDTH/2.f, VIEW_HEIGHT-100.f);
+
+    // Make sure origin is at center of sprite for proper rotation and movement
+    sprite.setOrigin(texture.getSize().x/2.f, texture.getSize().y/2.f);
+
+    // Use a reasonable scale
+    sprite.setScale(0.5f, 0.5f); //0.5f for both later
+
+    // Create a smaller hitbox that better matches the ship
+    hitbox = new Hitbox(sf::Vector2f(64.f, 32.f)); //50.f, 25.f
 
     this->speed = speed;
 }
@@ -41,7 +52,7 @@ sf::FloatRect Player::getGlobalBounds() { return sprite.getGlobalBounds(); }
 
 void Player::draw(sf::RenderWindow& window) { 
     window.draw(sprite);
-    hitbox->draw(window);
+    //hitbox->draw(window); -uncomment for hitbox debugging
 
 }
 
@@ -51,49 +62,33 @@ void Player::update(float dt, std::vector<Laser>& lasers, sf::Vector2f mousePos)
 
      handleInput(dt, lasers, mousePos);
 
-    hitbox->setPosition({sprite.getPosition().x, sprite.getPosition().y + 30});
+    hitbox->setPosition(sprite.getPosition());
     
-    }
+}
 
 void Player::handleInput(float dt, std::vector<Laser>& lasers, sf::Vector2f mousePos) {
     
     // Handle the input
+    sf::Vector2f movement(0, 0);
+
     sf::Vector2f position = sprite.getPosition();
     float halfWidth = sprite.getGlobalBounds().width / 2.f;
-    float halfHeight = sprite.getGlobalBounds().height / 2.f; // For more accurate vertical boundary
-
-    sf::Vector2f movement(0, 0);
-    // Vertical movement with screen boundary checks
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        // Why: Don't allow player to move past top edge of screen
-        if (position.y - halfHeight > 0) {
-            movement.y -= speed;
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        // Why: Don't allow player to move past bottom edge of screen
-        if (position.y + halfHeight < VIEW_HEIGHT) {
-            movement.y += speed;
-        }
-    }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // moving left
     {
-        // Why: Don't allow player to move past left edge of screen
+        //Don't allow player to move past left edge of screen
         if (position.x - halfWidth > 0) {
-            direction = -1;
             movement.x -= speed;
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // Moving Right
     {
-        // Why: Don't allow player to move past right edge of screen
+        //Don't allow player to move past right edge of screen
         if (position.x + halfWidth < VIEW_WIDTH) {
-            direction = 1;
             movement.x += speed;
         }	
     }
-
+   //apply movement
     sprite.move(movement * dt);
 
     // if the space bar is pressed, create a laser, and fire it at the mouse
@@ -102,11 +97,10 @@ void Player::handleInput(float dt, std::vector<Laser>& lasers, sf::Vector2f mous
         // Get the direction to fire the laser
         sf::Vector2f fireDirection = mousePos - sprite.getPosition();
             
-        float temp = sqrt(fireDirection.x * fireDirection.x + fireDirection.y * fireDirection.y);
-        if (temp > 0)
+        float length = sqrt(fireDirection.x * fireDirection.x + fireDirection.y * fireDirection.y);
+        if (length > 0)
         {                
-            fireDirection.x /= temp;
-            fireDirection.y /= temp;
+            fireDirection /= length;
 
         }
     
@@ -115,8 +109,8 @@ void Player::handleInput(float dt, std::vector<Laser>& lasers, sf::Vector2f mous
         timeSinceLastLaser = 0; // Changed from timeSinceLastSpell
     }
         
-    // Handle the animation
-    handleAnimation(direction, dt);
+    // placeholder for if we switch to a sprite sheet
+    //handleAnimation(direction, dt);
 
 }
     // Function to create a laser
