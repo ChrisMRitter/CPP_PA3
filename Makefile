@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -std=c++17 -I/opt/homebrew/include -I./src
 LDFLAGS = -L/opt/homebrew/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
-SRC = src/main.cpp src/player.cpp src/textManager.cpp src/enemyManager.cpp src/enemy.cpp
+SRC = src/main.cpp src/player.cpp src/textManager.cpp src/enemyManager.cpp src/enemy.cpp src/laser.cpp src/hitbox.cpp 
 OBJ = $(SRC:.cpp=.o)
 TARGET = game
 
