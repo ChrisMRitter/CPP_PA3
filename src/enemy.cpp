@@ -26,8 +26,6 @@ void Enemy::update(float dt, sf::Vector2f playerPos)
         dirVec /= len;
         sprite.move(dirVec * speed * dt);
     }
-    int dx = (sprite.getPosition().x < playerPos.x) ? 1 : -1;
-    sprite.setScale(scale * dx, scale);
 }
 
 void Enemy::draw(sf::RenderWindow& window)
