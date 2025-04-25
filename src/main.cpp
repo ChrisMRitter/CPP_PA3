@@ -1,4 +1,3 @@
-// main.cpp
 #include "enemyManager.h"
 #include "player.h"
 #include "textManager.h"
@@ -29,7 +28,7 @@ int main() {
     sf::Image sheetImg = sheet.copyToImage();
     sf::Texture chaserTex, turretTex;
     chaserTex.loadFromImage(sheetImg, sf::IntRect(0*64, 0*64, 64, 64));
-    turretTex.loadFromImage(sheetImg, sf::IntRect(4*64, 0*64, 64, 64));
+    turretTex.loadFromImage(sheetImg, sf::IntRect(0*64, 4*64, 64, 64));
     auto chaserPtr = std::make_shared<sf::Texture>(chaserTex);
     auto turretPtr = std::make_shared<sf::Texture>(turretTex);
 
@@ -109,9 +108,6 @@ int main() {
     return 0;
 }
 
-// ------------------------------------------------------------------------
-// Press-Enter-To-Start screen
-// ------------------------------------------------------------------------
 void startScreen(sf::RenderWindow& window, const sf::Font& font) {
     sf::Text prompt("Press Enter to Start", font, 50);
     prompt.setFillColor(sf::Color::White);
