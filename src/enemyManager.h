@@ -1,3 +1,6 @@
+// enemyManager.h
+// This is the enemyManager class, which manages the enemies present in the game.
+
 #ifndef ENEMY_MANAGER_H
 #define ENEMY_MANAGER_H
 
@@ -35,12 +38,13 @@ public:
   void handlePlayerCollisions(Player &player, int damage);
 
 private:
+  // A vector of all enemies handled by this manager
   std::vector<Enemy> enemies;
   std::shared_ptr<sf::Texture> enemyTexture;
   float enemyScale = 1.f;
 
   float spawnTimer = 0.f;
-  float spawnCooldown = 2.f;
+  float spawnCooldown = 2.f; // default, overridden in configure()
   int maxEnemies = 10;
 
   int baseHealth = 3;
@@ -50,6 +54,7 @@ private:
   std::uniform_int_distribution<> hpDist;
   std::uniform_real_distribution<float> speedDist;
 
+  // Only spawn from the top edge
   void spawnEnemy(const sf::Vector2f &);
 };
 
