@@ -57,7 +57,7 @@ void Player::update(float dt, std::vector<Laser> &lasers,
   timeSinceLastHit += dt; // invulnerability cooldown iterator
   timeSinceLastLaser += dt; // laser cooldown iterator
 
-  handleInput(dt, lasers, mouse2Pos);
+  handleInput(dt, lasers, mousePos);
   // Set the hitbox's position to the player's position
   hitbox->setPosition(sprite.getPosition());
 }

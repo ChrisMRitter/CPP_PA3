@@ -5,13 +5,30 @@
  The larger aliens are motherships, they deal more damage, are harder to destroy, and give more points.
  Player moves side to side but can shoot in 360 degrees, enemies have free movement within the gameplay window.
 
- Press Spacebar to Shoot, A and D keys to move
+ Press Spacebar to Shoot, A and D keys to move. Aim the laser with mouse/trackpad
 
-Credit -
+# Credit -
 
 Jason Gentile: laser.cpp, laser.h, gameconstants.h, main.cpp, player.cpp, player.h, hitbox.cpp, hitbox.h, music, Makefile
 
 Christopher Ritter: enemy.cpp, enemy.h, sprites and sound effects, player.cpp, player.h, Makefile, main.cpp, git and GitHub
 
 Alexander Aldama: textManager.cpp, textManager.h, score.cpp, score.h, Makefile, Assets (sprites, music), main.cpp, documentation and code review, original game concept
+
+
+# Resources -
+
+During the development of this project, the following resources were used
+
+- Claude Sonnet 3.7 for debugging assistance and code organization,
+ some generation if we got stuck
+
+- "Beginning C++ Game Programming", 3rd Ed.  by John Horton
+
+- SFML Tutorials https://youtube.com/playlist?list=PL6xSOsbVA1eaJnHo_O6uB4qU8LZWzzKdo&si=WXg-0kLmG5azMhjs
+
+- https://www.pngwing.com/ for sprites
+
+- Week 10 example project code
+
 
