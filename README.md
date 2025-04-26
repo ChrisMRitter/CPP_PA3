@@ -30,5 +30,3 @@ During the development of this project, the following resources were used
 - https://www.pngwing.com/ for sprites
 
 - Week 10 example project code
-
-- https://www.pngwing.com/en/search?q=sprite+Game
