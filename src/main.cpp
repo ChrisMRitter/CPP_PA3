@@ -1,3 +1,4 @@
+// main.cpp
 // Contains the main game loop and handles all repeating logic
 #include "enemyManager.h"
 #include "laser.h"
@@ -10,18 +11,22 @@
 #include <SFML/Window/Mouse.hpp>
 #include <iostream>
 
+// Constants for window size
 static const float VIEW_WIDTH = 800.f;
 static const float VIEW_HEIGHT = 600.f;
 
+// Forward declarations
 void startScreen(sf::RenderWindow &window, const sf::Font &font);
 void checkPlayerHealth(Player &player, sf::RenderWindow &window,
                        const sf::Font &font);
 void handleEvents(sf::RenderWindow &window);
 
 int main() {
+  // Create the main window
   sf::RenderWindow window(sf::VideoMode(VIEW_WIDTH, VIEW_HEIGHT), "Space Shooter");
   window.setFramerateLimit(60);
 
+  // Load sprite sheet and crop two textures
   sf::Texture sheet;
   if (!sheet.loadFromFile("./Assets/Sprites/spaceship_spritesheet.png"))
     return -1;
@@ -32,22 +37,27 @@ int main() {
   auto chaserPtr = std::make_shared<sf::Texture>(chaserTex);
   auto turretPtr = std::make_shared<sf::Texture>(turretTex);
 
+  // Player and laser container
   Player player("./Assets/Sprites/hero spaceship.png", 300.f);
   std::vector<Laser> lasers;
 
+  // Load font for HUD and start screen
   sf::Font font;
   if (!font.loadFromFile("./Assets/Fonts/VeniteAdoremus-rgRBA.ttf"))
     return -1;
   textManager textMgr;
   textMgr.loadFont("./Assets/Fonts/VeniteAdoremus-rgRBA.ttf");
 
+  // Show start screen
   startScreen(window, font);
 
+  // Configure enemy managers with lower spawn rate
   EnemyManager chasers;
   chasers.configure(chaserPtr, 12, 2, 2.5f, 120.f, 1.0f);
   EnemyManager turrets;
   turrets.configure(turretPtr, 6, 10, 8.0f, 30.f, 5.0f);
 
+  // Load and scale background
   sf::Texture bgTex;
   if (!bgTex.loadFromFile("./Assets/Sprites/Planets and Space.png"))
     std::cerr << "Failed to load background\n";
@@ -57,6 +67,7 @@ int main() {
     background.setScale(ws.x/float(ts.x), ws.y/float(ts.y));
   }
 
+  // Play background music
   sf::Music bgMusic;
   if (bgMusic.openFromFile("./Assets/Sound/bgmusic.mp3")) {
     bgMusic.setLoop(true);
@@ -64,36 +75,46 @@ int main() {
     bgMusic.play();
   }
 
+  // Main loop
   sf::Clock clock;
   while (window.isOpen()) {
+    // Handle events and check health
     handleEvents(window);
     checkPlayerHealth(player, window, font);
 
+    // Delta time
     float dt = clock.restart().asSeconds();
     if (dt > 0.1f) dt = 0.1f;
 
+    // Update player (including firing)
     sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
     player.update(dt, lasers, mousePos);
 
+    // Update lasers
     for (auto &laser : lasers) laser.update(dt);
 
+    // Update enemies (spawn from top, move)
     sf::Vector2f ppos = player.getPosition();
     chasers.update(dt, ppos);
     turrets.update(dt, ppos);
 
+    // Laser-enemy collisions
     int chaserKills = chasers.handleLaserCollisions(lasers);
     textMgr.addScore(chaserKills * 100);
     int turretKills = turrets.handleLaserCollisions(lasers);
     textMgr.addScore(turretKills * 500);
 
+    // Enemy-player collisions (damage values)
     chasers.handlePlayerCollisions(player, 1);
     turrets.handlePlayerCollisions(player, 5);
 
+    // Update HUD
     sf::Vector2f vc = window.getView().getCenter();
     sf::Vector2f vs = window.getView().getSize();
     textMgr.updatePlayerHealth(player.getHealth(), vc, vs);
     textMgr.updateScoreDisplay(vc, vs);
 
+    // Draw everything
     window.clear();
     window.draw(background);
     chasers.draw(window);
@@ -107,6 +128,9 @@ int main() {
   return 0;
 }
 
+// ------------------------------------------------------------------------
+// Press-Enter-To-Start screen
+// ------------------------------------------------------------------------
 void startScreen(sf::RenderWindow &window, const sf::Font &font) {
   sf::Text prompt("Press Enter to Start", font, 50);
   prompt.setFillColor(sf::Color::White);
@@ -122,6 +146,9 @@ void startScreen(sf::RenderWindow &window, const sf::Font &font) {
   }
 }
 
+// ------------------------------------------------------------------------
+// Check player health and show Game Over
+// ------------------------------------------------------------------------
 void checkPlayerHealth(Player &player, sf::RenderWindow &window, const sf::Font &font) {
   if (player.getHealth() <= 0) {
     sf::Text gameOver("Game Over\nPress Esc to Quit", font, 50);
@@ -139,6 +166,9 @@ void checkPlayerHealth(Player &player, sf::RenderWindow &window, const sf::Font 
   }
 }
 
+// ------------------------------------------------------------------------
+// Basic event handling
+// ------------------------------------------------------------------------
 void handleEvents(sf::RenderWindow &window) {
   sf::Event ev;
   while (window.pollEvent(ev)) {
