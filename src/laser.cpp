@@ -6,6 +6,7 @@
 
 using namespace sf;
 
+// Constructor
 Laser::Laser(float x, float y, float speed, sf::Vector2f direction) {
   // Create a red rectangular laser beam
   rectangle = RectangleShape(sf::Vector2f(10.f, 5.f));
