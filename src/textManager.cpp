@@ -1,5 +1,6 @@
-// The textManager class is intended to provide a singular class to manage the
-// majority of text.
+// textManager.cpp
+// The textManager class is intended to provide a
+// singular class to manage the majority of text.
 
 #include "textManager.h"
 #include <iostream>
