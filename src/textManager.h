@@ -11,7 +11,7 @@
 
 class textManager {
 public:
-  // Function to load font
+  // Constructor
   bool loadFont(const std::string &path);
   // Function to update the player's health text
   void updatePlayerHealth(int health, sf::Vector2f viewCenter,
