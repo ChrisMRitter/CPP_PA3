@@ -1,3 +1,5 @@
+// The Hitbox class is a custom-made hitbox for the player and enemies.
+
 #ifndef HITBOX_H
 #define HITBOX_H
 

@@ -2,11 +2,12 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include <string>
 
 #include "laser.h"
-#include <iostream>
 
 class Hitbox;
 class Player {
@@ -30,22 +31,26 @@ public:
 private:
   Hitbox *hitbox;
 
-  float damageCooldown = 0.5f; // half a second cooldown
+  float damageCooldown = 0.5f;
   float timeSinceLastHit = 0.f;
 
   sf::Texture texture;
   sf::Sprite sprite;
   float speed = 100.f;
-  // The health of the player
   int health = 10;
   int curentFrame = 0;
   float timePerFrame = 0.2f;
   float timeSinceLastFrame = 0.0f;
+
   float laserCooldown = 0.5f;
   float timeSinceLastLaser = 0.0f;
 
-  int direction = 1; // the direction player is facing, 1 = right, -1 = left
+  int direction = 1;
+
+  sf::SoundBuffer laserBuffer;
+  sf::Sound laserSound;
+
   void handleAnimation(int direction, float dt);
 };
 
-#endif // PLAYER_H
+#endif

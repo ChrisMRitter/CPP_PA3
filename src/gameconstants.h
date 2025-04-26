@@ -1,3 +1,4 @@
+// Sets the view width and view height
 // src/GameConstants.h
 #ifndef GAME_CONSTANTS_H
 #define GAME_CONSTANTS_H
