@@ -1,6 +1,6 @@
 # CPP_PA3
 #Team Churro - Jason Gentile, Alexander Aldama, Christopher Ritter
-#This game is a basic implementation of a Galaga-inspired 2D sidescroller shooter where the player has to stop an alien invasion. Aliens deal damage over time if a collision with the player is detected, they can destroy the player within a few seconds (especially the big ones). Small enemies take 1 hit from the laser to kill, larger enemies take several and deal more damage on contact. Player moves side to side but can shoot in 360 degrees, enemies have free movement within the gameplay window.
+#This game is a basic implementation of a Galaga-inspired 2D sidescroller shooter where the player has to stop an alien invasion. Aliens deal damage over time if a collision with the player is detected, they can destroy the player within a few seconds (especially the big ones). Small enemies take 1 hit from the laser to kill, larger enemies take several and deal more damage on contact. Player moves side to side but can shoot in 360 degrees, enemies have free movement within the gameplay window. Press Spacebar to Shoot, A and D keys to move
 
 Credit -
 
